@@ -1,13 +1,66 @@
-# React + Vite
+Event Booking Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based web application for finding and booking events across the USA.
 
-Currently, two official plugins are available:
+🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Find Events: Search events by state and city
+Event Booking: Book appointments with date and time selection
+My Bookings: View and manage your event bookings
+Data Persistence: Bookings saved in localStorage
+Responsive Design: Mobile-friendly interface
+ 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+React.js
+React Router
+Tailwind CSS
+Axios for API integration
+ 📋 Requirements
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# xeventbooking
+Node.js (v14 or higher)
+npm or yarn
+ 🚀 Getting Started
+
+bash
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+
+# Build for production
+npm run build
+📱 Pages
+
+Home Page - Search events by state and city
+Search Results - View available events
+Booking Page - Select date and time slots
+My Bookings - View your booked events
+ 🔧 API Endpoints
+
+States: https://eventdata.onrender.com/states
+Cities: https://eventdata.onrender.com/cities/:state
+Events: https://eventdata.onrender.com/events?state=:state&city=:city
+ 📦 Key Components
+
+SearchForm - State/city selection with dropdowns
+EventCard - Event display with booking option
+BookingForm - Date/time selection interface
+MyBookings - Bookings display with localStorage persistence
+ ✅ Testing
+
+Application passes all Cypress end-to-end tests and unit tests.
+
+🎨 Design
+
+Follows Figma design specifications with responsive layout and Swiper carousel integration.
