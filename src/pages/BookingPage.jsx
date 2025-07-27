@@ -43,6 +43,14 @@ const BookingPage = () => {
           <p>{event.address}, {event.city}</p>
           <p>Rating: {event.rating}</p>
 
+          {/* ALWAYS show time of day indicators on booking page */}
+          <div className="mt-6">
+            <p>Today</p>
+            <p>Morning</p>
+            <p>Afternoon</p>
+            <p>Evening</p>
+          </div>
+
           <div className="mt-6">
             <label className="block mb-2">Select Date (within 7 days)</label>
             <input
@@ -57,14 +65,6 @@ const BookingPage = () => {
               }
               className="border p-2 rounded"
             />
-          </div>
-
-          {/* ALWAYS show time of day indicators - moved outside date selection */}
-          <div className="mt-6">
-            <p>Today</p>
-            <p>Morning</p>
-            <p>Afternoon</p>
-            <p>Evening</p>
           </div>
 
           {selectedDate && (
