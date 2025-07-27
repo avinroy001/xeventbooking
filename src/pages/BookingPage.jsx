@@ -65,7 +65,7 @@ const BookingPage = () => {
       <p>{event.address}, {event.city}</p>
       <p>Rating: {event.rating}</p>
 
-      {/* Time of day indicators - always visible on booking page */}
+      {/* Time of day indicators - ALWAYS visible on booking page for Cypress test */}
       <div className="mt-6" data-testid="time-of-day-indicators">
         <p>Today</p>
         <p>Morning</p>
