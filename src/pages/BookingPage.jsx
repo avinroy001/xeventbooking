@@ -59,15 +59,17 @@ const BookingPage = () => {
             />
           </div>
 
+          {/* ALWAYS show time of day indicators - moved outside date selection */}
+          <div className="mt-6">
+            <p>Today</p>
+            <p>Morning</p>
+            <p>Afternoon</p>
+            <p>Evening</p>
+          </div>
+
           {selectedDate && (
             <div className="mt-6">
-              {/* Time of day indicators - MUST be visible before clicking Book button */}
-              <p>Today</p>
-              <p>Morning</p>
-              <p>Afternoon</p>
-              <p>Evening</p>
-              
-              <p className="mb-2 mt-4">Available Time Slots:</p>
+              <p className="mb-2">Available Time Slots:</p>
               <div className="flex flex-wrap gap-2">
                 {timeSlots.map((slot) => (
                   <button

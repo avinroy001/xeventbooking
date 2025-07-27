@@ -10,7 +10,7 @@ const MyBookingsPage = () => {
 
   return (
     <div className="p-6">
-      <h1>My Bookings</h1>
+      <h1 className="text-3xl mb-6">My Bookings</h1>
       {bookings.length === 0 ? (
         <p>No bookings found.</p>
       ) : (
