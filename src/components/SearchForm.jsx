@@ -7,6 +7,8 @@ const SearchForm = () => {
   const [cities, setCities] = useState([]);
   const [selectedState, setSelectedState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
+  const [showStateDropdown, setShowStateDropdown] = useState(false);
+  const [showCityDropdown, setShowCityDropdown] = useState(false);
 
   const navigate = useNavigate();
 
@@ -27,6 +29,16 @@ const SearchForm = () => {
     }
   }, [selectedState]);
 
+  const handleStateSelect = (state) => {
+    setSelectedState(state);
+    setShowStateDropdown(false);
+  };
+
+  const handleCitySelect = (city) => {
+    setSelectedCity(city);
+    setShowCityDropdown(false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedState && selectedCity) {
@@ -38,53 +50,55 @@ const SearchForm = () => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div id="state" className="relative">
         <label className="block mb-1">Select State</label>
-        <select
-          value={selectedState}
-          onChange={(e) => setSelectedState(e.target.value)}
-          className="w-full p-2 border rounded appearance-none bg-white"
-          required
+        <div 
+          className="w-full p-2 border rounded bg-white cursor-pointer"
+          onClick={() => setShowStateDropdown(!showStateDropdown)}
         >
-          <option value="">-- Select State --</option>
-          {states.map((state) => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          ))}
-        </select>
-        <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
+          {selectedState || '-- Select State --'}
         </div>
+        {showStateDropdown && (
+          <ul className="absolute z-10 w-full border rounded bg-white max-h-40 overflow-y-auto">
+            {states.map((state) => (
+              <li 
+                key={state} 
+                className="p-2 hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleStateSelect(state)}
+              >
+                {state}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <div id="city" className="relative">
         <label className="block mb-1">Select City</label>
-        <select
-          value={selectedCity}
-          onChange={(e) => setSelectedCity(e.target.value)}
-          className="w-full p-2 border rounded appearance-none bg-white"
-          required
-          disabled={!selectedState}
+        <div 
+          className={`w-full p-2 border rounded bg-white cursor-pointer ${!selectedState ? 'opacity-50' : ''}`}
+          onClick={() => selectedState && setShowCityDropdown(!showCityDropdown)}
         >
-          <option value="">-- Select City --</option>
-          {cities.map((city) => (
-            <option key={city} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
-        <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
+          {selectedCity || '-- Select City --'}
         </div>
+        {showCityDropdown && selectedState && (
+          <ul className="absolute z-10 w-full border rounded bg-white max-h-40 overflow-y-auto">
+            {cities.map((city) => (
+              <li 
+                key={city} 
+                className="p-2 hover:bg-gray-100 cursor-pointer"
+                onClick={() => handleCitySelect(city)}
+              >
+                {city}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <button
         id="searchBtn"
         type="submit"
         className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        disabled={!selectedState || !selectedCity}
       >
         Search
       </button>
