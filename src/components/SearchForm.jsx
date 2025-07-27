@@ -12,33 +12,21 @@ const SearchForm = () => {
 
   const navigate = useNavigate();
 
-  // Fetch states on component mount
   useEffect(() => {
-    const fetchStates = async () => {
-      try {
-        const response = await axios.get('https://eventdata.onrender.com/states');
-        setStates(response.data);
-      } catch (error) {
-        console.error('Error fetching states:', error);
-      }
-    };
-    fetchStates();
+    axios.get('https://eventdata.onrender.com/states').then((res) => {
+      setStates(res.data);
+    });
   }, []);
 
-  // Fetch cities when state changes
   useEffect(() => {
-    const fetchCities = async () => {
-      if (selectedState) {
-        try {
-          const response = await axios.get(`https://eventdata.onrender.com/cities/${selectedState}`);
-          setCities(response.data);
+    if (selectedState) {
+      axios
+        .get(`https://eventdata.onrender.com/cities/${selectedState}`)
+        .then((res) => {
+          setCities(res.data);
           setSelectedCity('');
-        } catch (error) {
-          console.error('Error fetching cities:', error);
-        }
-      }
-    };
-    fetchCities();
+        });
+    }
   }, [selectedState]);
 
   const handleStateSelect = (state) => {
@@ -59,24 +47,22 @@ const SearchForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} data-testid="search-form">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div id="state" className="relative">
         <label className="block mb-1">Select State</label>
         <div 
           className="w-full p-2 border rounded bg-white cursor-pointer"
           onClick={() => setShowStateDropdown(!showStateDropdown)}
-          data-testid="state-dropdown"
         >
           {selectedState || '-- Select State --'}
         </div>
         {showStateDropdown && (
-          <ul className="absolute z-10 w-full border rounded bg-white max-h-40 overflow-y-auto" data-testid="state-options">
+          <ul className="absolute z-10 w-full border rounded bg-white max-h-40 overflow-y-auto">
             {states.map((state) => (
               <li 
                 key={state} 
                 className="p-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => handleStateSelect(state)}
-                data-testid={`state-option-${state}`}
               >
                 {state}
               </li>
@@ -85,23 +71,21 @@ const SearchForm = () => {
         )}
       </div>
 
-      <div id="city" className="relative mt-4">
+      <div id="city" className="relative">
         <label className="block mb-1">Select City</label>
         <div 
           className={`w-full p-2 border rounded bg-white cursor-pointer ${!selectedState ? 'opacity-50' : ''}`}
           onClick={() => selectedState && setShowCityDropdown(!showCityDropdown)}
-          data-testid="city-dropdown"
         >
           {selectedCity || '-- Select City --'}
         </div>
         {showCityDropdown && selectedState && (
-          <ul className="absolute z-10 w-full border rounded bg-white max-h-40 overflow-y-auto" data-testid="city-options">
+          <ul className="absolute z-10 w-full border rounded bg-white max-h-40 overflow-y-auto">
             {cities.map((city) => (
               <li 
                 key={city} 
                 className="p-2 hover:bg-gray-100 cursor-pointer"
                 onClick={() => handleCitySelect(city)}
-                data-testid={`city-option-${city}`}
               >
                 {city}
               </li>
@@ -113,9 +97,8 @@ const SearchForm = () => {
       <button
         id="searchBtn"
         type="submit"
-        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mt-4"
+        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
         disabled={!selectedState || !selectedCity}
-        data-testid="search-button"
       >
         Search
       </button>
