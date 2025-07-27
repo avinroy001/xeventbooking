@@ -26,6 +26,8 @@ const SearchResults = () => {
     if (selectedDate) {
       // Generate dummy time slots
       setTimeSlots(['10:00 AM', '12:00 PM', '2:00 PM', '4:00 PM']);
+    } else {
+      setTimeSlots([]);
     }
   }, [selectedDate]);
 
@@ -49,10 +51,15 @@ const SearchResults = () => {
       time: slot,
     };
 
-    const existing = JSON.parse(localStorage.getItem('bookings')) || [];
-    localStorage.setItem('bookings', JSON.stringify([...existing, newBooking]));
-    alert('Event booked successfully!');
-    closeBooking();
+    try {
+      const existing = JSON.parse(localStorage.getItem('bookings')) || [];
+      localStorage.setItem('bookings', JSON.stringify([...existing, newBooking]));
+      alert('Event booked successfully!');
+      closeBooking();
+    } catch (error) {
+      console.error('Error saving booking:', error);
+      alert('Error booking event. Please try again.');
+    }
   };
 
   return (
@@ -65,7 +72,7 @@ const SearchResults = () => {
         ))}
       </div>
 
-      {/* Booking Modal */}
+      {/* Booking Modal - appears on same page */}
       {showBooking && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full max-h-screen overflow-y-auto">
@@ -77,6 +84,14 @@ const SearchResults = () => {
             <p>{selectedEvent?.address}</p>
             <p>{selectedEvent?.city}, {selectedEvent?.state}</p>
             <p>Rating: {selectedEvent?.rating}</p>
+
+            {/* Time of day indicators - appear in modal */}
+            <div className="mt-4" data-testid="time-of-day-indicators">
+              <p>Today</p>
+              <p>Morning</p>
+              <p>Afternoon</p>
+              <p>Evening</p>
+            </div>
 
             <div className="mt-4">
               <label className="block mb-2">Select Date (within 7 days)</label>
@@ -92,14 +107,6 @@ const SearchResults = () => {
                 }
                 className="border p-2 rounded w-full"
               />
-            </div>
-
-            {/* Time of day indicators - appear when booking modal is open */}
-            <div className="mt-4">
-              <p>Today</p>
-              <p>Morning</p>
-              <p>Afternoon</p>
-              <p>Evening</p>
             </div>
 
             {selectedDate && (
