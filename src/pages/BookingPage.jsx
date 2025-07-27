@@ -61,7 +61,13 @@ const BookingPage = () => {
 
           {selectedDate && (
             <div className="mt-6">
-              <p className="mb-2">Available Time Slots:</p>
+              {/* Time of day indicators - MUST be visible before clicking Book button */}
+              <p>Today</p>
+              <p>Morning</p>
+              <p>Afternoon</p>
+              <p>Evening</p>
+              
+              <p className="mb-2 mt-4">Available Time Slots:</p>
               <div className="flex flex-wrap gap-2">
                 {timeSlots.map((slot) => (
                   <button
@@ -72,14 +78,6 @@ const BookingPage = () => {
                     {slot}
                   </button>
                 ))}
-              </div>
-              
-              {/* Time of day indicators for Cypress test */}
-              <div className="mt-4">
-                <p>Today</p>
-                <p>Morning</p>
-                <p>Afternoon</p>
-                <p>Evening</p>
               </div>
             </div>
           )}
